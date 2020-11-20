@@ -1,0 +1,6 @@
+.vscode
+backup
+*/__pycache__
+*/checkpoints
+data_collection/data
+data_collection/credentials.json
