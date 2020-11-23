@@ -1,1 +1,11 @@
 pre-commit==2.8.2
+pandas==1.1.4
+goodreads==0.3.2
+tensorboard==2.4.0
+fastapi==0.61.2
+Pillow==8.0.1
+torch==1.7.0+cpu
+torchvision==0.8.1+cpu
+uvicorn==0.12.2
+streamlit==0.71.0
+requests==2.24.0
