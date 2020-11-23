@@ -3,5 +3,6 @@ backup
 **/__pycache__
 **/checkpoints
 **/runs
-ml/data_collection/data
-ml/data_collection/credentials.json
+**/*.log
+data
+credentials.json

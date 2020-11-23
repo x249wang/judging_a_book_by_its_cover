@@ -2,6 +2,8 @@ import os
 import urllib.request
 import pandas as pd
 from PIL import Image
+import ml.data_collection.config as config
+from ml.logging import logger
 
 
 def create_filename(base_filename, file_id, target, source_url):
@@ -15,8 +17,13 @@ def download_file(source_url, dest_filename):
 
 if __name__ == "__main__":
 
-    book_data = pd.read_csv("data/book_data.csv")
+    if not os.path.exists(config.images_path):
+        os.mkdir(config.images_path)
+
+    book_data = pd.read_csv(config.raw_table_data_path)
     book_data["image_mode"] = ""
+
+    logger.info("Started downloading book cover images")
 
     for index, row in book_data.iterrows():
 
@@ -27,7 +34,7 @@ if __name__ == "__main__":
         book_rating = row["average_rating"]
 
         image_filename = create_filename(
-            "data/raw_images/cover", book_id, book_rating, image_url
+            f"{config.images_path}/cover", book_id, book_rating, image_url
         )
 
         download_file(image_url, image_filename)
@@ -37,7 +44,10 @@ if __name__ == "__main__":
 
         book_data.loc[index, "image_mode"] = image_mode
 
-        if len(image_mode) < 3:
+        if image_mode not in ["RGB", "RGBA"]:  # Only keep RGB format images
             os.remove(image_filename)
 
-        book_data.to_csv("data/book_data.csv", index=False)
+        book_data.to_csv(config.final_table_data_path, index=False)
+
+    num_images = len(os.listdir(config.images_path))
+    logger.info(f"Downloaded {num_images} book cover images")

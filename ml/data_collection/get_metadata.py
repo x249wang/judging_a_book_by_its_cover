@@ -1,12 +1,12 @@
+import os
 import pickle
 import time
 import json
 import pandas as pd
 from goodreads import client
 from goodreads.request import GoodreadsRequestException
-
-
-N_BOOKS = 100000
+import ml.data_collection.config as config
+from ml.logging import logger
 
 
 def retrieve_book_details(client, book_id):
@@ -22,7 +22,10 @@ def retrieve_book_details(client, book_id):
 
 if __name__ == "__main__":
 
-    with open("credentials.json") as f:
+    if not os.path.exists(config.data_folder):
+        os.mkdir(config.data_folder)
+
+    with open(config.credentials_path) as f:
         credentials = json.load(f)
 
     goodreads_client = client.GoodreadsClient(credentials["key"], credentials["secret"])
@@ -30,16 +33,18 @@ if __name__ == "__main__":
     book_data = {}
     book_id = 0
 
-    while len(book_data) < N_BOOKS:
+    logger.info("Started collecting book metadata")
+    while len(book_data) < config.n_books:
 
         book_id += 1
         time.sleep(1)
 
-        # if book_id % 1000 == 0:
-        #     print(book_id)
+        print(book_id)
 
-        #     with open('data/book_data.pkl', 'wb') as output:
-        #         pickle.dump(book_data, output)
+        if book_id % config.save_every == 0:
+            # Save results once every while in case the program crashes
+            with open(config.raw_data_path, "wb") as output:
+                pickle.dump(book_data, output)
 
         try:
             book_data[book_id] = retrieve_book_details(goodreads_client, book_id)
@@ -51,8 +56,11 @@ if __name__ == "__main__":
             print(e)
             pass
 
-    with open("data/book_data.pkl", "wb") as output:
+    with open(config.raw_data_path, "wb") as output:
         pickle.dump(book_data, output)
+    logger.info(
+        f"Saved {len(book_data)} raw results (in dict format) to {config.raw_data_path}"
+    )
 
     book_data_table = (
         pd.DataFrame.from_dict(book_data, orient="index")
@@ -61,6 +69,7 @@ if __name__ == "__main__":
     )
 
     book_data_table[
-        (book_data_table.ratings_count.astype(int) > 10)
+        (book_data_table.ratings_count.astype(int) > config.min_likes_threshold)
         & (~book_data_table.image_url.str.contains("nophoto"))
-    ].to_csv("data/book_data.csv", index=False)
+    ].to_csv(config.raw_table_data_path, index=False)
+    logger.info(f"Saved results (in df format) to {config.raw_table_data_path}")
