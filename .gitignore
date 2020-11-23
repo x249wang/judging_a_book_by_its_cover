@@ -1,6 +1,7 @@
 .vscode
 backup
-*/__pycache__
-*/checkpoints
-data_collection/data
-data_collection/credentials.json
+**/__pycache__
+**/checkpoints
+**/runs
+ml/data_collection/data
+ml/data_collection/credentials.json
