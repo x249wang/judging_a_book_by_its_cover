@@ -4,11 +4,15 @@ from torchvision import models
 
 
 class CNNModel(nn.Module):
-    def __init__(self, fc_hidden_dim=256, dropout=0.1):
+    def __init__(self, fc_hidden_dim=256, dropout=0.1, freeze_layers=False):
 
         super(CNNModel, self).__init__()
 
         self.feature_extractor = models.resnet18(pretrained=True)
+
+        if freeze_layers:
+            for param in self.feature_extractor.parameters():
+                param.requires_grad = False
 
         num_features = self.feature_extractor.fc.in_features
         self.feature_extractor.fc = nn.Sequential(

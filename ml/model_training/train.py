@@ -57,7 +57,11 @@ if __name__ == "__main__":
     torch.manual_seed(config.seed)
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-    model_ft = CNNModel()
+    model_ft = CNNModel(
+        fc_hidden_dim=config.fc_hidden_dim,
+        dropout=config.dropout,
+        freeze_layers=config.freeze_layers,
+    )
 
     criterion = nn.MSELoss()
     optimizer = optim.Adam(model_ft.parameters())
@@ -68,7 +72,7 @@ if __name__ == "__main__":
     logger.info(f"Device: {device}; epochs: {config.num_epochs}")
     logger.info(f"Tensorboard log written to: {config.summary_writer_path}")
 
-    # Model training
+    # Model training with periodic validation
     start = time.time()
     logger.info(
         "Training started. For training/val loss records, refer to tensorboard logs"
@@ -98,7 +102,7 @@ if __name__ == "__main__":
             train_running_loss += train_loss.item() * inputs.size(0)
             samples_seen += inputs.size(0)
 
-            if idx > 0 and idx % 500 == 0:
+            if idx > 0 and idx % config.eval_every == 0:
 
                 print(
                     f"Epoch {epoch} batch {idx} training loss: {train_running_loss / samples_seen}"
@@ -165,6 +169,7 @@ if __name__ == "__main__":
             labels = labels.to(device)
 
             outputs = model_ft(inputs)
+            outputs = torch.clamp(outputs, min=1.0, max=5.0)
             test_loss = criterion(outputs, labels)
 
             test_running_loss += test_loss.item() * inputs.size(0)

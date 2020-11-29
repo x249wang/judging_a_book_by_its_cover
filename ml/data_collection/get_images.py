@@ -20,9 +20,11 @@ if __name__ == "__main__":
     if not os.path.exists(config.images_path):
         os.mkdir(config.images_path)
 
+    # Load book metadata
     book_data = pd.read_csv(config.raw_table_data_path)
     book_data["image_mode"] = ""
 
+    # Download book cover images, keeping only RGB format ones
     logger.info("Started downloading book cover images")
 
     for index, row in book_data.iterrows():
@@ -44,7 +46,7 @@ if __name__ == "__main__":
 
         book_data.loc[index, "image_mode"] = image_mode
 
-        if image_mode not in ["RGB", "RGBA"]:  # Only keep RGB format images
+        if image_mode not in ["RGB", "RGBA"]:
             os.remove(image_filename)
 
         book_data.to_csv(config.final_table_data_path, index=False)

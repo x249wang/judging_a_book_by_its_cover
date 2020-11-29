@@ -28,8 +28,10 @@ if __name__ == "__main__":
     with open(config.credentials_path) as f:
         credentials = json.load(f)
 
+    # Set up client instance to query Goodreads API
     goodreads_client = client.GoodreadsClient(credentials["key"], credentials["secret"])
 
+    # Query info by book ID
     book_data = {}
     book_id = 0
 
