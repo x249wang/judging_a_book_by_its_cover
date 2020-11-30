@@ -1,0 +1,4 @@
+Pillow==8.0.1
+requests==2.24.0
+streamlit==0.71.0
+wait-for-it==2.1.1

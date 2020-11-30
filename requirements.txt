@@ -9,3 +9,4 @@ torchvision==0.8.1+cpu
 uvicorn==0.12.2
 streamlit==0.71.0
 requests==2.24.0
+wait-for-it==2.1.1
