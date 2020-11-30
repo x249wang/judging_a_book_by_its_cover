@@ -6,3 +6,5 @@ torch==1.7.0+cpu
 --find-links https://download.pytorch.org/whl/torch_stable.html
 torchvision==0.8.1+cpu
 uvicorn==0.12.2
+pytest==6.1.2
+numpy==1.19.4
