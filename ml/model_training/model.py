@@ -4,11 +4,18 @@ from torchvision import models
 
 
 class CNNModel(nn.Module):
-    def __init__(self, fc_hidden_dim=256, dropout=0.1, freeze_layers=False):
+    def __init__(
+        self,
+        pretrained_weights_path,
+        fc_hidden_dim=256,
+        dropout=0.1,
+        freeze_layers=False,
+    ):
 
         super(CNNModel, self).__init__()
 
-        self.feature_extractor = models.resnet18(pretrained=True)
+        self.feature_extractor = models.resnet18(pretrained=False)
+        self.feature_extractor.load_state_dict(torch.load(pretrained_weights_path))
 
         if freeze_layers:
             for param in self.feature_extractor.parameters():

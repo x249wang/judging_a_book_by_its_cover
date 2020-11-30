@@ -61,6 +61,7 @@ if __name__ == "__main__":
         fc_hidden_dim=config.fc_hidden_dim,
         dropout=config.dropout,
         freeze_layers=config.freeze_layers,
+        pretrained_weights_path=config.pretrained_weights_path,
     )
 
     criterion = nn.MSELoss()

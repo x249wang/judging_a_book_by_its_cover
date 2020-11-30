@@ -16,6 +16,7 @@ eval_every = 100
 model_training_path = "ml/model_training"
 
 checkpoint_path = f"{model_training_path}/checkpoints"
+pretrained_weights_path = f"{checkpoint_path}/resnet18-5c106cde.pth"
 model_path_pattern = "model_ft_epoch_{}_{}.pth"
 
 tensorboard_path = f"{model_training_path}/runs"
