@@ -2,7 +2,7 @@ from time import perf_counter
 import numpy as np
 from fastapi.testclient import TestClient
 
-from .backend import app
+from backend import app
 
 
 def test_welcome_page():
@@ -13,7 +13,7 @@ def test_welcome_page():
 
 
 def test_predict_on_invalid_image():
-    filename = "fixtures/black_white_image.jpg"
+    filename = "tests/fixtures/black_white_image.jpg"
 
     with TestClient(app) as client:
 
@@ -24,7 +24,7 @@ def test_predict_on_invalid_image():
 
 
 def test_predict_on_valid_image():
-    filename = "fixtures/rgb_book_cover.jpg"
+    filename = "tests/fixtures/rgb_book_cover.jpg"
 
     with TestClient(app) as client:
 
@@ -37,7 +37,7 @@ def test_predict_on_valid_image():
 
 def test_prediction_latency():
     n_repeats = 200
-    filename = "fixtures/rgb_book_cover.jpg"
+    filename = "tests/fixtures/rgb_book_cover.jpg"
     latency_array = []
 
     with TestClient(app) as client:

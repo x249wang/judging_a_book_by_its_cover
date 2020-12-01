@@ -1,7 +1,7 @@
 import pytest
 import torch
 from PIL import Image
-from .data_processing import is_valid_image, process_image
+from data_processing import is_valid_image, process_image
 
 
 @pytest.mark.parametrize(
