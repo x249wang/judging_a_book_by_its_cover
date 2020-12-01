@@ -1,7 +1,8 @@
 .vscode
 backup
 **/__pycache__
-**/checkpoints
+**/.pytest_cache
+ml/*/checkpoints
 **/runs
 **/*.log
 data
