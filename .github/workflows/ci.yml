@@ -1,17 +1,24 @@
 name: web app ci
-on: [push]
+on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Build the multi-container web app
         run: docker-compose -f app/docker-compose.yml up -d
+
       - name: Check running containers
         run: docker ps -a
+
       - name: Check backend logs
         run: docker logs app_backend
+
       - name: Check frontend logs
         run: docker logs app_frontend
+
       - name: Run tests
         run: docker exec app_backend python -m pytest tests/
