@@ -1,7 +1,7 @@
 name: web app ci
 on: [push, pull_request]
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,3 +22,21 @@ jobs:
 
       - name: Run tests
         run: docker exec app_backend python -m pytest tests/
+  
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy web app
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /root/judging_a_book_by_its_cover
+            git pull
+            cd app
+            docker-compose up --force-recreate ---build --detach
+            docker image prune --force
