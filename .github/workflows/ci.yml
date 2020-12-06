@@ -35,8 +35,4 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /root/judging_a_book_by_its_cover
-            git pull
-            cd app
-            docker-compose up --force-recreate ---build --detach
-            docker image prune --force
+            ls
