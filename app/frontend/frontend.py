@@ -2,6 +2,8 @@ import streamlit as st
 import requests
 from PIL import Image
 
+st.set_page_config(page_title="Judging a Book by Its Cover", page_icon="📚")
+
 # Hacky way to center images as customizable layout is currently not supported by Streamlit
 # (source: https://discuss.streamlit.io/t/how-to-center-images-latex-header-title-etc/1946/4)
 with open("style.css") as f:
