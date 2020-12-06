@@ -26,11 +26,14 @@ if uploaded_file is not None:
     response = requests.post("http://backend:8080/judge", files=file)
 
     if response.status_code != requests.codes.ok:
-        st.markdown("Invalid format - image must be in RGB mode!")
+        st.markdown(
+            "<div style='text-align: center;'>Invalid format - image must be in RGB mode!</div>",
+            unsafe_allow_html=True,
+        )
 
     else:
         predicted_book_rating = response.json()["predicted_book_rating"]
         st.markdown(
-            f"<br/><br/>Predicted Rating: <b>{predicted_book_rating}</b>",
+            f"<div style='text-align: center;'>Predicted Rating: <b>{predicted_book_rating}</b></div>",
             unsafe_allow_html=True,
         )
