@@ -24,6 +24,7 @@ jobs:
         run: docker exec app_backend python -m pytest tests/
   
   deploy:
+    needs: test
     runs-on: ubuntu-latest
 
     steps:
@@ -34,4 +35,8 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           script: |
-            ls
+            cd /root/judging_a_book_by_its_cover
+            git pull
+            cd app
+            docker-compose up --force-recreate ---build --detach
+            docker image prune --force
