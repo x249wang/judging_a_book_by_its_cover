@@ -36,6 +36,6 @@ if uploaded_file is not None:
     else:
         predicted_book_rating = response.json()["predicted_book_rating"]
         st.markdown(
-            f"<div style='text-align: center;'>Predicted Rating: <b>{predicted_book_rating}</b></div>",
+            f"<div style='text-align: center;'>Predicted Rating: {predicted_book_rating}</div>",
             unsafe_allow_html=True,
         )
