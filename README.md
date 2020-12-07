@@ -3,7 +3,7 @@
 
 Judging a Book by Its Cover is a web app that predicts the rating for a book based on its cover image. To see it in action, visit the [website](http://www.judgingabookbyitscover.ca/).
 
-<img src="assets/webapp.jpg" width="400">
+<img src="assets/webapp.jpg" width="500">
 
 ## Details of the Web App
 
@@ -19,7 +19,7 @@ To host the web app, I purchased a domain and rented a Ubuntu server from [Vultr
 
 To automate the deployment process, I decided to go with [GitHub Actions](https://github.com/features/actions). The workflow I set up would first build the multi-container app and run my backend tests to make sure the endpoints work as expected and that the predictions are served with sufficiently low latency. Next, it would connect to the remote server using SSH, pull the changes from the repository, rebuild the images and restart the containers. A lot of the inspiration came from [this helpful tutorial](https://soshace.com/deploying-your-nodejs-code-to-a-server-every-time-you-push-with-github-actions/). The whole process only takes a few minutes to complete (most of which is spent on building the Docker images during the test stage), and allows me to make sure that I haven't introduced any code breaking changes, as shown below: 
 
-<img src="assets/github_actions.jpg" width="500">
+<img src="assets/github_actions.jpg" width="700">
 
 And to summarize, the diagram below illustrates the architecture of the app.
 
