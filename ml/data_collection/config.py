@@ -10,4 +10,4 @@ final_table_data_path = f"{data_folder}/book_data_final.csv"
 
 images_path = "ml/data_collection/data/raw_images"
 
-min_likes_threshold = 10
+min_reviews_threshold = 10

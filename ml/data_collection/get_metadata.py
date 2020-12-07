@@ -71,7 +71,7 @@ if __name__ == "__main__":
     )
 
     book_data_table[
-        (book_data_table.ratings_count.astype(int) > config.min_likes_threshold)
+        (book_data_table.ratings_count.astype(int) > config.min_reviews_threshold)
         & (~book_data_table.image_url.str.contains("nophoto"))
     ].to_csv(config.raw_table_data_path, index=False)
     logger.info(f"Saved results (in df format) to {config.raw_table_data_path}")
