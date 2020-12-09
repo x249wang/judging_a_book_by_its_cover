@@ -17,13 +17,20 @@ To make the app more easily reproducible for deployment, I used [`Docker`](https
 
 To host the web app, I purchased a domain and rented a Ubuntu server from [Vultr](https://www.vultr.com/products/cloud-compute/). It was fairly simple to set up Docker on the compute instance via `apt get`, and I was able to get the app up and running in no time. I followed [this tutorial](https://gethelp.wildapricot.com/en/articles/546-godaddy-dns-setup) for the DNS setup. 
 
-To automate the deployment process, I decided to go with [GitHub Actions](https://github.com/features/actions). The workflow I set up would first build the multi-container app and run my backend tests to make sure the endpoints work as expected and that the predictions are served with sufficiently low latency. Next, it would connect to the remote server using SSH, pull the changes from the repository, rebuild the images and restart the containers. A lot of the inspiration came from [this helpful tutorial](https://soshace.com/deploying-your-nodejs-code-to-a-server-every-time-you-push-with-github-actions/). The whole process only takes a few minutes to complete (most of which is spent on building the Docker images during the test stage), and allows me to make sure that I haven't introduced any code breaking changes, as shown below: 
+To automate the deployment process, I decided to go with [
+Actions](https://github.com/features/actions). The workflow I set up would first build the multi-container app and run my backend tests to make sure the endpoints work as expected and that the predictions are served with sufficiently low latency. Next, it would connect to the remote server using SSH, pull the changes from the repository, rebuild the images and restart the containers. A lot of the inspiration came from [this helpful tutorial](https://soshace.com/deploying-your-nodejs-code-to-a-server-every-time-you-push-with-github-actions/). The whole process only takes a few minutes to complete (most of which is spent on building the Docker images during the test stage), and allows me to make sure that I haven't introduced any code breaking changes, as shown below: 
 
 <img src="assets/github_actions.jpg" width="700">
 
 And to summarize, the diagram below illustrates the architecture of the app.
 
 <img src="assets/architecture.jpg" width="500">
+
+## How to Run
+
+Scripts for the web app can be found in the `app` folder. To run the app locally, run `docker-compose build` followed by `docker-compose --detach` (Docker Compose required) within the `app` directory, and it will be accessible on `localhost`. 
+
+The ML pipeline (data collection and model training, along with logging) can be ran with `run.sh`. Relevant files can be found within the `ml` folder.
 
 ## Learnings 📚
 
@@ -33,3 +40,4 @@ Through this project, I had a chance to review the [documentation](https://docs.
 1. Work on improving the model: I can try fine-tuning the whole model on my book cover image dataset instead of using fixed weights from the pre-trained model, apply a deeper ResNet model or use a different architecture (e.g. [ResNeXt](https://arxiv.org/abs/1611.05431)). I did not spend too much time on model refinement yet because I wanted to focus on getting the app up and running to learn about the deployment process.
 2. Convert the site from HTTP to HTTPS by obtaining and configuring an SSL certificate.
 3. Learn more about reverse proxies like `nginx`.
+4. Automate SSH key rotation with GitHub Actions
