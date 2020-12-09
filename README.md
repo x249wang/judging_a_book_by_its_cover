@@ -20,6 +20,8 @@ To host the web app, I purchased a domain and rented a Ubuntu server from [Vultr
 To automate the deployment process, I decided to go with [
 Actions](https://github.com/features/actions). The workflow I set up would first build the multi-container app and run my backend tests to make sure the endpoints work as expected and that the predictions are served with sufficiently low latency. Next, it would connect to the remote server using SSH, pull the changes from the repository, rebuild the images and restart the containers. A lot of the inspiration came from [this helpful tutorial](https://soshace.com/deploying-your-nodejs-code-to-a-server-every-time-you-push-with-github-actions/). The whole process only takes a few minutes to complete (most of which is spent on building the Docker images during the test stage), and allows me to make sure that I haven't introduced any code breaking changes, as shown below: 
 
+<img src="assets/github_actions_job_flow.jpg" width="700">
+
 <img src="assets/github_actions.jpg" width="700">
 
 And to summarize, the diagram below illustrates the architecture of the app.
