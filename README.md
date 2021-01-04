@@ -43,3 +43,4 @@ Through this project, I had a chance to review the [documentation](https://docs.
 2. Convert the site from HTTP to HTTPS by obtaining and configuring an SSL certificate.
 3. Learn more about reverse proxies like `nginx`.
 4. Automate SSH key rotation with GitHub Actions
+5. Set up a monitoring solution for system-related (e.g. latency, error rate), model-related (e.g. prediction distribution) and resource-related (e.g. memory utilization) metrics, and simulate production traffic with [Locust](https://github.com/locustio/locust) to test it out, similar to what's proposed [here](https://www.jeremyjordan.me/ml-monitoring/)
