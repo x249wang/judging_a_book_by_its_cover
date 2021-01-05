@@ -18,7 +18,7 @@ app = FastAPI(
 
 
 @app.on_event("startup")
-async def load_model():
+def load_model():
 
     global model
     model = CNNModel()
@@ -30,12 +30,12 @@ async def load_model():
 
 
 @app.get("/")
-async def root():
+def root():
     return {"message": "Welcome to the app!"}
 
 
 @app.post("/judge")
-async def predict_book_rating(file: UploadFile = File(...)):
+def predict_book_rating(file: UploadFile = File(...)):
 
     image = Image.open(file.file)
 
