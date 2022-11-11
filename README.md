@@ -1,7 +1,7 @@
 
 # Judging a Book by Its Cover
 
-Judging a Book by Its Cover is a web app that predicts the rating for a book based on its cover image. To see it in action, visit the [website](http://www.judgingabookbyitscover.ca/).
+Judging a Book by Its Cover is a web app that predicts the rating for a book based on its cover image. To see it in action, visit the website (update: link removed).
 
 <img src="assets/webapp.jpg" width="500">
 
